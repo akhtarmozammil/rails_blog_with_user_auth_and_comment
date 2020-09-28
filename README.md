@@ -1,0 +1,2 @@
+# rails_blog_with_user_auth_and_comment
+Rails Blog Project
