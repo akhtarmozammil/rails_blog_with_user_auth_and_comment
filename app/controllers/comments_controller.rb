@@ -5,7 +5,8 @@ class CommentsController < ApplicationController
   end
 
   def new
-    @comment = Comment.new
+    @post_id = params[:post_id]
+    @comment = Comment.new(:post_id => params[:post_id])
   end
 
   def edit
@@ -14,10 +15,10 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.create(comment_params)
     @comment.user_id = current_user.id
-    @comment.post_id = @@current_post_id
+    # @comment.post_id = post_id
     @comment.save
 
-    redirect_to post_path(@@current_post_id)
+    redirect_to post_path(@comment.post_id)
   end
 
   def show
@@ -35,7 +36,7 @@ class CommentsController < ApplicationController
 
   private
   def comment_params
-    params.require(:comment).permit(:body)
+    params.require(:comment).permit(:body, :post_id)
   end
 
 end
